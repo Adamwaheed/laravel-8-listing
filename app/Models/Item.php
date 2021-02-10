@@ -12,4 +12,8 @@ class Item extends Model
     public function category(){
         return $this->belongsTo(\App\Models\Category::class);
     }
+
+    public $fillable = [
+        'name','code','price','cost','category_id','description'
+    ];
 }

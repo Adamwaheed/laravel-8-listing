@@ -22,7 +22,7 @@ class CategoryController extends Controller
             $query->where('name','like' ,$searchValue.'%');
         }
 
-        $categories   = $query->paginate();  
+        $categories   = $query->orderBy('id','desc')->paginate();  
 
         return view('categories.index')->with('categories',$categories);
     }
@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -45,7 +45,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'code' => 'required|string',
+            'price' => 'required|integer',
+        ]);
+
+
+        $category = new \App\Models\Category($request->all());
+        $category->save();
+        return redirect()->route('categories.index');
+       
     }
 
     /**
@@ -67,7 +77,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+
+     $category = \App\Models\Category::find($id);
+
+     return view('categories.edit')->with(compact('category'));
     }
 
     /**
@@ -79,7 +92,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = \App\Models\Category::find($id);
+        $category->fill($request->all());
+        $category->save();
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -90,6 +107,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = \App\Models\Category::find($id);
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }

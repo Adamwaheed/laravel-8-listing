@@ -22,7 +22,7 @@ class ItemController extends Controller
             $query->where('name','like' ,$searchValue.'%');
         }
 
-        $items   = $query->with('category')->paginate();  
+        $items   = $query->with('category')->orderBy('id','desc')->paginate();  
 
 
         return view('items.index')->with('items',$items);
@@ -35,7 +35,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        $categories = \App\Models\Category::all();
+        return view('items.create')->with(compact('categories'));
     }
 
     /**
@@ -46,7 +47,9 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = new \App\Models\Item($request->all());
+        $item->save();
+        return redirect()->route('items.index');
     }
 
     /**
@@ -68,7 +71,9 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = \App\Models\Category::all();
+        $item = \App\Models\Item::find($id);
+        return view('items.edit')->with(compact('categories','item'));
     }
 
     /**
@@ -80,7 +85,12 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $item = \App\Models\Item::find($id);
+        $item->fill($request->all());
+        $item->save();
+
+        return redirect()->route('items.index');
     }
 
     /**
@@ -91,6 +101,8 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = \App\Models\Item::find($id);
+        $item->delete();
+        return redirect()->route('items.index');
     }
 }

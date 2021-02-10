@@ -15,4 +15,6 @@ use App\Http\Controllers\ItemController;
 */
 
 Route::resource('categories',CategoryController::class);
+
 Route::resource('items',ItemController::class);
+
