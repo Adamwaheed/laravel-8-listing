@@ -1,8 +1,12 @@
 @extends('layout')
 
 @section('page')
-<table class="table">
-  <thead>
+<div class="col-12">
+  <span class="display-5 mb-sm-3">Items</span>
+  <span><a href="{{route('items.create')}}" class="btn btn-primary m-4">New Item</a></span>
+</div>
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Code</th>
@@ -47,4 +51,5 @@
     @endforeach
   </tbody>
 </table> 
+{{$items->links()}}
 @endsection

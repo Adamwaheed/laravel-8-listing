@@ -13,8 +13,9 @@
   <body>
 
     @include('menu')
-
-    @yield('page')
+    <div class="container py-4">
+      @yield('page')
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

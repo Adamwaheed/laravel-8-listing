@@ -1,14 +1,13 @@
 @extends('layout')
 
 @section('page')
-<!-- Just an image -->
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="btn btn-primary" href="{{route('categories.create')}}">Create</a>
-  </div>
-</nav>
-<table class="table">
-  <thead>
+<style> .pagination { justify-content: center; } </style>
+<div class="col-12 text-center">
+  <span class="display-5 mb-sm-3">Categories</span>
+  <span><a href="{{route('categories.create')}}" class="btn btn-primary m-4">New Category</a></span>
+</div>
+<table class="table table-bordered table-striped mx-auto w-auto">
+  <thead class="table-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Code</th>
@@ -44,5 +43,6 @@
     </tr>
     @endforeach
   </tbody>
-</table> 
+</table>
+{{$categories->onEachSide(1)->links()}}
 @endsection
